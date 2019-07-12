@@ -11,6 +11,8 @@ public class MorseCypherTest {
 
     @Test
     public void encrypt() {
+        assertEquals("Empty", "", cypher.encrypt(""));
+        assertEquals("Null", "", cypher.encrypt(null));
         assertEquals("String 'bang' is encrypted",
                 "-... .- -. --.", cypher.encrypt("bang"));
         assertEquals("Lower case alphabet",
@@ -32,6 +34,8 @@ public class MorseCypherTest {
 
     @Test
     public void decrypt() {
+        assertEquals("Empty", "", cypher.decrypt(""));
+        assertEquals("Null", "", cypher.decrypt(null));
         assertEquals("String 'bang' is encrypted",
                 "BANG", cypher.decrypt("-... .- -. --."));
         assertEquals("Upper case alphabet",
