@@ -1,4 +1,4 @@
-package name.dusanjakub.cryptoservice.cyphers;
+package name.dusanjakub.cryptoservice.ciphers;
 
 import org.springframework.stereotype.Service;
 
@@ -12,10 +12,10 @@ import static java.util.Map.Entry;
 import static java.util.stream.Collectors.toMap;
 
 /**
- * Implements the Morse code cyphers
+ * Implements the Morse code cipher
  */
 @Service("morse")
-public class MorseCypher implements Cypher {
+public class MorseCipher implements Cipher {
     private static final Map<Character, String> toMorse = new HashMap<>();
     private static final Map<String, String> fromMorse;
 

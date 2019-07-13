@@ -1,7 +1,7 @@
 package name.dusanjakub.cryptoservice.services;
 
-import name.dusanjakub.cryptoservice.cyphers.Cypher;
-import name.dusanjakub.cryptoservice.exceptions.UnknownCypherException;
+import name.dusanjakub.cryptoservice.ciphers.Cipher;
+import name.dusanjakub.cryptoservice.exceptions.UnknownCipherException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,26 +19,26 @@ public class CryptoServiceTest {
     private CryptoService service;
 
     @Test
-    public void whenValidCypher_thenEncrypt() {
+    public void whenValidCipher_thenEncrypt() {
         Assert.assertEquals("OSTRAVA !!!", service.encrypt("bang", "OSTRAVA"));
     }
 
-    @Test(expected = UnknownCypherException.class)
-    public void whenInvalidCypherInEncrypt_thenThrow() {
+    @Test(expected = UnknownCipherException.class)
+    public void whenInvalidCipherInEncrypt_thenThrow() {
         service.encrypt("bla", "");
     }
 
     @Test
-    public void whenValidCypher_thenDecrypt() {
+    public void whenValidCipher_thenDecrypt() {
         Assert.assertEquals("OSTRAVA", service.decrypt("bang", "OSTRAVA !!!"));
     }
 
-    @Test(expected = UnknownCypherException.class)
-    public void whenInvalidCypherInDecrypt_thenThrow() {
+    @Test(expected = UnknownCipherException.class)
+    public void whenInvalidCipherInDecrypt_thenThrow() {
         service.decrypt("bla", "");
     }
 
-    static class TestCypher implements Cypher {
+    static class TestCipher implements Cipher {
 
         private static final String BANG = " !!!";
         private static final int BANG_LENGTH = BANG.length();
@@ -58,13 +58,13 @@ public class CryptoServiceTest {
     static class TestContextConfiguration {
 
         @Bean
-        public CryptoService cryptoService(Map<String, Cypher> cyphers) {
-            return new CryptoService(cyphers);
+        public CryptoService cryptoService(Map<String, Cipher> ciphers) {
+            return new CryptoService(ciphers);
         }
 
         @Bean("bang")
-        public Cypher testCypher() {
-            return new TestCypher();
+        public Cipher testCipher() {
+            return new TestCipher();
         }
     }
 }

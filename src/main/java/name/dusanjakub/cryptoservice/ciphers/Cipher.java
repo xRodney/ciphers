@@ -1,18 +1,18 @@
-package name.dusanjakub.cryptoservice.cyphers;
+package name.dusanjakub.cryptoservice.ciphers;
 
 /**
- * Cypher interface
+ * Cipher interface
  */
-public interface Cypher {
+public interface Cipher {
     /**
-     * Encrypt the text according to the cypher
+     * Encrypt the text according to the cipher
      * @param text The text
      * @return Encrypted text
      */
     String encrypt(String text);
 
     /**
-     * Decrypt the text according to the cypher
+     * Decrypt the text according to the cipher
      * @param text Encrypted text
      * @return Decrypted text
      */
