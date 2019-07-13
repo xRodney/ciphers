@@ -58,6 +58,9 @@ public class MorseCypher implements Cypher {
         toMorse.put('9', "----.");
         toMorse.put('0', "-----");
 
+        toMorse.put('.', ".-.-.-");
+        toMorse.put('-', "-....- ");
+
         toMorse.put(' ', "");
 
         fromMorse = toMorse.entrySet().stream().collect(toMap(Entry::getValue, v -> v.getKey().toString()));
