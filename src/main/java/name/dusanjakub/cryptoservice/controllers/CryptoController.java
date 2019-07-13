@@ -1,5 +1,6 @@
 package name.dusanjakub.cryptoservice.controllers;
 
+import name.dusanjakub.cryptoservice.exceptions.UnknownCipherException;
 import name.dusanjakub.cryptoservice.services.CryptoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,18 +24,26 @@ public class CryptoController {
                             @RequestParam("text") String text,
                             @RequestParam("action") Action action,
                             Model model) {
-        String result;
-        switch (action) {
-            case ENCRYPT:
-                result = service.encrypt(cipherName, text);
-                break;
-            case DECRYPT:
-                result = service.decrypt(cipherName, text);
-                break;
-            default:
-                throw new IllegalArgumentException(action.toString());
+
+        model.addAttribute("cipher", cipherName);
+        model.addAttribute("text", text);
+
+        try {
+            String result;
+            switch (action) {
+                case ENCRYPT:
+                    result = service.encrypt(cipherName, text);
+                    break;
+                case DECRYPT:
+                    result = service.decrypt(cipherName, text);
+                    break;
+                default:
+                    throw new IllegalArgumentException(action.toString());
+            }
+            model.addAttribute("text", result);
+        } catch (UnknownCipherException ex) {
+            model.addAttribute("cipherError", "Cipher is not supported: " + cipherName);
         }
-        model.addAttribute("text", result);
         return "index";
     }
 
