@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Ciphers</title>
+    <link rel="stylesheet"
+          href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css"/>
+</head>
+<body>
+
+
+<div class="container">
+    <h1>Encode your text for free</h1>
+
+
+    <form method="post">
+        <div class="form-group">
+            <label for="cipher">Select cipher</label>
+            <select name="cipher" id="cipher" class="form-control">
+                <option value="morse">Morse code</option>
+                <option value="caesar">Caesar (not implemented)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="text">Enter text here</label>
+            <textarea name="text" id="text" th:text="${text}" class="form-control"></textarea>
+        </div>
+
+        <button type="submit" name="action" value="ENCRYPT" class="btn btn-primary">Encrypt</button>
+        <button type="submit" name="action" value="DECRYPT" class="btn btn-primary">Decrypt</button>
+    </form>
+</div>
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
