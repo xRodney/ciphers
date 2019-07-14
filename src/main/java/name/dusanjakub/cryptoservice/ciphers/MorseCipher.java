@@ -59,7 +59,7 @@ public class MorseCipher implements Cipher {
         toMorse.put('0', "-----");
 
         toMorse.put('.', ".-.-.-");
-        toMorse.put('-', "-....- ");
+        toMorse.put('-', "-....-");
 
         toMorse.put(' ', "");
 

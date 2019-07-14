@@ -50,4 +50,15 @@ public class MorseCipherTest {
                 "ONE T", cipher.decode("---k-.x.rr-"));
         assertEquals("Illegal morse sequences are passed through", "ON.---.----", cipher.decode("--- -. .---.----"));
     }
+
+    @Test
+    public void roundTripTest() {
+        var text = "ahoj 123";
+        var encoded1 = cipher.encode(text);
+        var encoded2 = cipher.encode(encoded1);
+        var decoded1 = cipher.decode(encoded2);
+        var decoded2 = cipher.decode(decoded1);
+
+        assertEquals(text.toUpperCase(), decoded2);
+    }
 }
