@@ -15,14 +15,37 @@ public class CryptoService {
         this.ciphers = ciphers;
     }
 
-    public String encrypt(String cipher, String text) {
-        return getCipherByName(cipher).encrypt(text);
+    /**
+     * Encode the text using the specified cipher
+     *
+     * @param cipher The cipher to use
+     * @param text   The plain text
+     * @return Encoded text
+     * @throws UnknownCipherException When the cipher name is not recognized
+     */
+    public String encode(String cipher, String text) {
+        return getCipherByName(cipher).encode(text);
     }
 
-    public String decrypt(String cipher, String text) {
-        return getCipherByName(cipher).decrypt(text);
+    /**
+     * Decode the text using the specified cipher
+     *
+     * @param cipher The cipher to use
+     * @param text   The encoded text
+     * @return Decoded text
+     * @throws UnknownCipherException When the cipher name is not recognized
+     */
+    public String decode(String cipher, String text) {
+        return getCipherByName(cipher).decode(text);
     }
 
+    /**
+     * Lookup the cipher implementation to use
+     *
+     * @param name Cipher name
+     * @return Cipher implementation
+     * @throws UnknownCipherException When the cipher name is not recognized
+     */
     private Cipher getCipherByName(String name) {
         return ciphers.computeIfAbsent(name, (n) -> {
             throw new UnknownCipherException(n);

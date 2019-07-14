@@ -25,8 +25,8 @@ public class CryptoControllerTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        Mockito.when(serviceMock.encrypt("x", "text")).thenReturn("encrypted");
-        Mockito.when(serviceMock.decrypt("x", "text")).thenReturn("decrypted");
+        Mockito.when(serviceMock.encode("x", "text")).thenReturn("encoded");
+        Mockito.when(serviceMock.decode("x", "text")).thenReturn("decoded");
     }
 
     @Test
@@ -35,32 +35,32 @@ public class CryptoControllerTest {
     }
 
     @Test
-    public void postIndex_encrypt() {
+    public void postIndex_encode() {
         assertEquals("index",
-                controller.postIndex("x", "text", CryptoController.Action.ENCRYPT, modelMock));
-        Mockito.verify(serviceMock).encrypt("x", "text");
-        Mockito.verify(modelMock).addAttribute("text", "encrypted");
+                controller.postIndex("x", "text", CryptoController.Action.ENCODE, modelMock));
+        Mockito.verify(serviceMock).encode("x", "text");
+        Mockito.verify(modelMock).addAttribute("text", "encoded");
     }
 
     @Test
-    public void postIndex_decrypt() {
+    public void postIndex_decode() {
         assertEquals("index",
-                controller.postIndex("x", "text", CryptoController.Action.DECRYPT, modelMock));
-        Mockito.verify(serviceMock).decrypt("x", "text");
-        Mockito.verify(modelMock).addAttribute("text", "decrypted");
+                controller.postIndex("x", "text", CryptoController.Action.DECODE, modelMock));
+        Mockito.verify(serviceMock).decode("x", "text");
+        Mockito.verify(modelMock).addAttribute("text", "decoded");
     }
 
     @Test
-    public void encryptRest() {
-        assertEquals("encrypted", controller.encryptRest("x", "text"));
-        Mockito.verify(serviceMock).encrypt("x", "text");
+    public void encodeRest() {
+        assertEquals("encoded", controller.encodeRest("x", "text"));
+        Mockito.verify(serviceMock).encode("x", "text");
         Mockito.verifyNoMoreInteractions(serviceMock);
     }
 
     @Test
-    public void decryptRest() {
-        assertEquals("decrypted", controller.decryptRest("x", "text"));
-        Mockito.verify(serviceMock).decrypt("x", "text");
+    public void decodeRest() {
+        assertEquals("decoded", controller.decodeRest("x", "text"));
+        Mockito.verify(serviceMock).decode("x", "text");
         Mockito.verifyNoMoreInteractions(serviceMock);
     }
 }

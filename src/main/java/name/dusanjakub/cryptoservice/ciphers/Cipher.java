@@ -5,16 +5,16 @@ package name.dusanjakub.cryptoservice.ciphers;
  */
 public interface Cipher {
     /**
-     * Encrypt the text according to the cipher
+     * Encode the text according to the cipher
      * @param text The text
-     * @return Encrypted text
+     * @return Encoded text
      */
-    String encrypt(String text);
+    String encode(String text);
 
     /**
-     * Decrypt the text according to the cipher
-     * @param text Encrypted text
-     * @return Decrypted text
+     * Decode the text according to the cipher
+     * @param text Encoded text
+     * @return Decoded text
      */
-    String decrypt(String text);
+    String decode(String text);
 }

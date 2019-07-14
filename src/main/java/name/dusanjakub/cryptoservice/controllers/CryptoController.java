@@ -14,11 +14,21 @@ public class CryptoController {
         this.service = service;
     }
 
+    /**
+     * The initial page load
+     */
     @GetMapping(path = "/")
     public String getIndex() {
         return "index";
     }
 
+    /**
+     * The main encoding and decoding action
+     *
+     * @param cipherName The cipher
+     * @param text       The test to encode or decode
+     * @param action     Encode / decode
+     */
     @PostMapping(path = "/")
     public String postIndex(@RequestParam("cipher") String cipherName,
                             @RequestParam("text") String text,
@@ -31,11 +41,11 @@ public class CryptoController {
         try {
             String result;
             switch (action) {
-                case ENCRYPT:
-                    result = service.encrypt(cipherName, text);
+                case ENCODE:
+                    result = service.encode(cipherName, text);
                     break;
-                case DECRYPT:
-                    result = service.decrypt(cipherName, text);
+                case DECODE:
+                    result = service.decode(cipherName, text);
                     break;
                 default:
                     throw new IllegalArgumentException(action.toString());
@@ -47,19 +57,33 @@ public class CryptoController {
         return "index";
     }
 
-    @PostMapping(path = "{cipherName}/encrypt")
+    /**
+     * Encode the text via REST
+     *
+     * @param cipherName The cipher to use
+     * @param text       The text
+     * @return Encoded text
+     */
+    @PostMapping(path = "{cipherName}/encode")
     @ResponseBody
-    public String encryptRest(@PathVariable String cipherName, @RequestBody String text) {
-        return service.encrypt(cipherName, text);
+    public String encodeRest(@PathVariable String cipherName, @RequestBody String text) {
+        return service.encode(cipherName, text);
     }
 
-    @PostMapping(path = "{cipherName}/decrypt")
+    /**
+     * Decode the text via REST
+     *
+     * @param cipherName The cipher to use
+     * @param text       The text
+     * @return Decoded text
+     */
+    @PostMapping(path = "{cipherName}/decode")
     @ResponseBody
-    public String decryptRest(@PathVariable String cipherName, @RequestBody String text) {
-        return service.decrypt(cipherName, text);
+    public String decodeRest(@PathVariable String cipherName, @RequestBody String text) {
+        return service.decode(cipherName, text);
     }
 
     enum Action {
-        ENCRYPT, DECRYPT
+        ENCODE, DECODE
     }
 }

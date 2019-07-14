@@ -19,23 +19,23 @@ public class CryptoServiceTest {
     private CryptoService service;
 
     @Test
-    public void whenValidCipher_thenEncrypt() {
-        Assert.assertEquals("OSTRAVA !!!", service.encrypt("bang", "OSTRAVA"));
+    public void whenValidCipher_thenEncode() {
+        Assert.assertEquals("OSTRAVA !!!", service.encode("bang", "OSTRAVA"));
     }
 
     @Test(expected = UnknownCipherException.class)
-    public void whenInvalidCipherInEncrypt_thenThrow() {
-        service.encrypt("bla", "");
+    public void whenInvalidCipherInEncode_thenThrow() {
+        service.encode("bla", "");
     }
 
     @Test
-    public void whenValidCipher_thenDecrypt() {
-        Assert.assertEquals("OSTRAVA", service.decrypt("bang", "OSTRAVA !!!"));
+    public void whenValidCipher_thenDecode() {
+        Assert.assertEquals("OSTRAVA", service.decode("bang", "OSTRAVA !!!"));
     }
 
     @Test(expected = UnknownCipherException.class)
-    public void whenInvalidCipherInDecrypt_thenThrow() {
-        service.decrypt("bla", "");
+    public void whenInvalidCipherInDecode_thenThrow() {
+        service.decode("bla", "");
     }
 
     static class TestCipher implements Cipher {
@@ -44,12 +44,12 @@ public class CryptoServiceTest {
         private static final int BANG_LENGTH = BANG.length();
 
         @Override
-        public String encrypt(String text) {
+        public String encode(String text) {
             return text + BANG;
         }
 
         @Override
-        public String decrypt(String text) {
+        public String decode(String text) {
             return text.length() > BANG_LENGTH ? text.substring(0, text.length() - BANG_LENGTH) : "";
         }
     }

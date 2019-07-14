@@ -10,44 +10,44 @@ public class MorseCipherTest {
     private MorseCipher cipher = new MorseCipher();
 
     @Test
-    public void encrypt() {
-        assertEquals("Empty", "", cipher.encrypt(""));
-        assertEquals("Null", "", cipher.encrypt(null));
-        assertEquals("String 'bang' is encrypted",
-                "-... .- -. --.", cipher.encrypt("bang"));
+    public void encode() {
+        assertEquals("Empty", "", cipher.encode(""));
+        assertEquals("Null", "", cipher.encode(null));
+        assertEquals("String 'bang' is encoded",
+                "-... .- -. --.", cipher.encode("bang"));
         assertEquals("Lower case alphabet",
                 ".- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --..",
-                cipher.encrypt("abcdefghijklmnopqrstuvwxyz"));
+                cipher.encode("abcdefghijklmnopqrstuvwxyz"));
         assertEquals("Upper case alphabet",
                 ".- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --..",
-                cipher.encrypt("ABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+                cipher.encode("ABCDEFGHIJKLMNOPQRSTUVWXYZ"));
         assertEquals("Numbers",
                 "----- .---- ..--- ...-- ....- ..... -.... --... ---.. ----.",
-                cipher.encrypt("0123456789"));
+                cipher.encode("0123456789"));
         assertEquals("Invalid chars are skipped, case is irrelevant",
                 "-... .- -. --. -... .- -. --.",
-                cipher.encrypt("BaNg!!!Bang"));
+                cipher.encode("BaNg!!!Bang"));
         assertEquals("Spaces are kept",
                 "--- -. .  - .-- ---  - .... .-. . .",
-                cipher.encrypt("One, two, three"));
+                cipher.encode("One, two, three"));
     }
 
     @Test
-    public void decrypt() {
-        assertEquals("Empty", "", cipher.decrypt(""));
-        assertEquals("Null", "", cipher.decrypt(null));
-        assertEquals("String 'bang' is encrypted",
-                "BANG", cipher.decrypt("-... .- -. --."));
+    public void decode() {
+        assertEquals("Empty", "", cipher.decode(""));
+        assertEquals("Null", "", cipher.decode(null));
+        assertEquals("String 'bang' is decoded",
+                "BANG", cipher.decode("-... .- -. --."));
         assertEquals("Upper case alphabet",
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZ", cipher.decrypt(".- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --.."));
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ", cipher.decode(".- -... -.-. -.. . ..-. --. .... .. .--- -.- .-.. -- -. --- .--. --.- .-. ... - ..- ...- .-- -..- -.-- --.."));
         assertEquals("Numbers",
-                "0123456789", cipher.decrypt("----- .---- ..--- ...-- ....- ..... -.... --... ---.. ----."));
+                "0123456789", cipher.decode("----- .---- ..--- ...-- ....- ..... -.... --... ---.. ----."));
         assertEquals("Invalid chars are skipped, case is always upper",
-                "BANGBANG", cipher.decrypt("-... .- -. --. -... .- -. --."));
+                "BANGBANG", cipher.decode("-... .- -. --. -... .- -. --."));
         assertEquals("Spaces are kept",
-                "ONE TWO THREE", cipher.decrypt("--- -. .  - .-- ---  - .... .-. . ."));
+                "ONE TWO THREE", cipher.decode("--- -. .  - .-- ---  - .... .-. . ."));
         assertEquals("Invalid chars are delimiters",
-                "ONE T", cipher.decrypt("---k-.x.rr-"));
-        assertEquals("Illegal morse sequences are passed through", "ON.---.----", cipher.decrypt("--- -. .---.----"));
+                "ONE T", cipher.decode("---k-.x.rr-"));
+        assertEquals("Illegal morse sequences are passed through", "ON.---.----", cipher.decode("--- -. .---.----"));
     }
 }

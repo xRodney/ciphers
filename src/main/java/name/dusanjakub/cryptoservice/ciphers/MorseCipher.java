@@ -67,7 +67,7 @@ public class MorseCipher implements Cipher {
     }
 
     @Override
-    public String encrypt(String text) {
+    public String encode(String text) {
         return (text == null ? "" : text).chars()
                 .mapToObj(c -> toMorse.get(Character.toUpperCase((char) c)))
                 .filter(Objects::nonNull)
@@ -75,7 +75,7 @@ public class MorseCipher implements Cipher {
     }
 
     @Override
-    public String decrypt(String text) {
+    public String decode(String text) {
         return Pattern.compile("[^.-]")
                 .splitAsStream(text == null ? "" : text)
                 .map(x -> fromMorse.getOrDefault(x, x))
