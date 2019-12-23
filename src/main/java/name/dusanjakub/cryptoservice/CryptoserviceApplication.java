@@ -32,7 +32,7 @@ public class CryptoserviceApplication implements WebMvcConfigurer {
         @Bean
         public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
             RequestMappingHandlerAdapter adapter = super.requestMappingHandlerAdapter();
-            HandlerMethodArgumentResolver resolver = new LazyBodyArgumentResolver(adapter);
+            HandlerMethodArgumentResolver resolver = new LazyBodyArgumentResolver(adapter.getMessageConverters());
             adapter.setCustomArgumentResolvers(Collections.singletonList(resolver));
             return adapter;
         }

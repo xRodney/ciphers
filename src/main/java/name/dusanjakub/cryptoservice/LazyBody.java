@@ -1,11 +1,11 @@
 package name.dusanjakub.cryptoservice;
 
-import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 public interface LazyBody<T> {
-    T get();
+    T get() throws MethodArgumentNotValidException;
 
-    BindingResult validate();
-
-    T merge(T source);
+    T merge(T source) throws JsonMappingException, MethodArgumentNotValidException;
 }

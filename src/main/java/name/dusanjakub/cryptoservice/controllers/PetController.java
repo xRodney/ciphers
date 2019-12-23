@@ -6,7 +6,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import name.dusanjakub.cryptoservice.LazyBody;
 import name.dusanjakub.cryptoservice.entities.Pet;
@@ -50,13 +55,13 @@ public class PetController {
 
     @PostMapping(path = "/")
     @ResponseBody
-    public Pet post(@RequestBody Pet pet) {
+    public Pet post(@Valid @RequestBody Pet pet) {
         return put(UUID.randomUUID().toString(), pet);
     }
 
     @PatchMapping(path = "/{id}")
     @ResponseBody
-    public Pet path(@PathVariable("id") String id, LazyBody<Pet> pet) {
+    public Pet patch(@PathVariable("id") String id, @Valid LazyBody<Pet> pet) throws JsonMappingException, MethodArgumentNotValidException {
         Pet orig = getById(id);
         Objects.requireNonNull(orig, "Patching invalid pet");
         return put(id, pet.merge(orig));
@@ -70,7 +75,7 @@ public class PetController {
 
     @PutMapping(path = "/{id}")
     @ResponseBody
-    public Pet put(@PathVariable("id") String id, @RequestBody Pet pet) {
+    public Pet put(@PathVariable("id") String id, @Valid @RequestBody Pet pet) {
         pet.setId(id);
         pets.put(id, pet);
         return pet;
