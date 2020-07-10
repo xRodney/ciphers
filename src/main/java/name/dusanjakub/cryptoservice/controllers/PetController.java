@@ -1,5 +1,6 @@
 package name.dusanjakub.cryptoservice.controllers;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
-
-import name.dusanjakub.cryptoservice.LazyBody;
+import name.dusanjakub.cryptoservice.PartialBody;
+import name.dusanjakub.cryptoservice.entities.JsonAttributes;
+import name.dusanjakub.cryptoservice.entities.JsonRequest;
 import name.dusanjakub.cryptoservice.entities.Pet;
 
 @Controller
@@ -55,16 +56,16 @@ public class PetController {
 
     @PostMapping(path = "/")
     @ResponseBody
-    public Pet post(@Valid @RequestBody Pet pet) {
+    public Pet post(@Valid @RequestBody JsonRequest<Pet> pet) {
         return put(UUID.randomUUID().toString(), pet);
     }
 
     @PatchMapping(path = "/{id}")
     @ResponseBody
-    public Pet patch(@PathVariable("id") String id, @Valid LazyBody<Pet> pet) throws JsonMappingException, MethodArgumentNotValidException {
+    public Pet patch(@PathVariable("id") String id, @RequestBody PartialBody<JsonRequest<Pet>> pet) throws IOException, MethodArgumentNotValidException {
         Pet orig = getById(id);
         Objects.requireNonNull(orig, "Patching invalid pet");
-        return put(id, pet.merge(orig));
+        return put(id, pet.mergeInto(new JsonRequest<>(new JsonAttributes<>(id, orig))));
     }
 
     @DeleteMapping(path = "/{id}")
@@ -75,7 +76,8 @@ public class PetController {
 
     @PutMapping(path = "/{id}")
     @ResponseBody
-    public Pet put(@PathVariable("id") String id, @Valid @RequestBody Pet pet) {
+    public Pet put(@PathVariable("id") String id, @RequestBody JsonRequest<Pet> request) {
+        var pet = request.getData().getAttributes();
         pet.setId(id);
         pets.put(id, pet);
         return pet;

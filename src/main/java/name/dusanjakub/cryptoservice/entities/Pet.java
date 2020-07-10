@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
 
+import com.fasterxml.jackson.annotation.JsonMerge;
+
 public class Pet {
     private String id;
     @NotBlank
@@ -12,6 +14,9 @@ public class Pet {
     @PositiveOrZero
     private int age;
     private List<String> toys;
+
+    @JsonMerge
+    private Species species;
 
     public String getId() {
         return id;
@@ -53,5 +58,13 @@ public class Pet {
                 ", age=" + age +
                 ", toys=" + toys +
                 '}';
+    }
+
+    public Species getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(Species species) {
+        this.species = species;
     }
 }
